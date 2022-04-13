@@ -77,12 +77,43 @@ class TransactionTableViewController: UITableViewController{
         cell.value.text = String(transactions[indexPath.row].value)
         cell.date.text =  transactions[indexPath.row].date
         
+        cell.editButton.tag = transactions[indexPath.row].id
+        cell.editButton.addTarget(self, action: #selector(editTapped(sender:)), for: .touchUpInside)
+        
+        cell.deleteButton.tag = transactions[indexPath.row].id
+        cell.deleteButton.addTarget(self, action: #selector(deleteTapped(sender:)), for: .touchUpInside)
+        
+
         //Design
         cell.layer.borderWidth = 1
         cell.layer.cornerRadius = 8
         cell.clipsToBounds = true
 
         return cell
+    }
+    
+    @objc func editTapped(sender: UIButton) {
+
+        print("Tapped")
+    }
+
+    @objc func deleteTapped(sender: UIButton) {
+        
+        let txnId = sender.tag;
+        print("Removing txn id " + String(txnId))
+
+        let alertController = UIAlertController(
+               title: "Confirmation", message: "Are you sure you want to remove the " + transactionType + "?", preferredStyle: .alert)
+        
+        alertController.addAction(UIAlertAction(title: "Remove", style: .cancel, handler: { (action: UIAlertAction!) in
+             
+        }))
+        
+        let defaultAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+        alertController.addAction(defaultAction)
+
+        present(alertController, animated: true, completion: nil)
+    
     }
 
     /*

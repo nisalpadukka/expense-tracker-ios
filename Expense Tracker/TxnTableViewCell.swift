@@ -12,6 +12,9 @@ class TransactionTableViewCell: UITableViewCell {
     @IBOutlet weak var type: UILabel!
     @IBOutlet weak var date: UILabel!
     @IBOutlet weak var value: UILabel!
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,16 +27,10 @@ class TransactionTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func editBtn(_ sender: UIButton) {
-    }
-    
-    @IBAction func saveBtn(_ sender: UIButton) {
-    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
 
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))
     }
-    
 }

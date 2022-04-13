@@ -69,8 +69,7 @@ class TransactionViewController: UIViewController, UIPickerViewDelegate, UIPicke
         }
     }
     
-    
-    @IBAction func saveBtn(_ sender: UIButton) {
+    @IBAction func updateBtn(_ sender: UIButton) {
         let newTransaction = Transaction()
         newTransaction.catagory = transactionMenu.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "Other"
         newTransaction.value = Double(amount.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "0.0") ?? 0.0
@@ -85,6 +84,7 @@ class TransactionViewController: UIViewController, UIPickerViewDelegate, UIPicke
         print("User entered " + newTransaction.toString())
         performSegue(withIdentifier: "tableView", sender: self)
     }
+    
     @IBAction func onSelect(_ sender: UITextField) {
         pickerView.delegate?.pickerView?(pickerView, didSelectRow: 0, inComponent: 0)
     }
