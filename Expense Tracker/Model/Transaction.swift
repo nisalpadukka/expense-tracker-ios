@@ -14,11 +14,16 @@ class Transaction{
     var description: String = ""
     var date:String = ""
     var type:String = ""
+    var year:Int = 0
+    var month:Int = 0
+    var week:Int = 0
     
     func toString() ->String{
         var str:String = ""
         str = "ID:" + String(id) + " Type: " + type + " Category:" + catagory
-        return  str + " Description:" + description + " Value:" + String(value) + " Date:" + date
+        str =  str + " Description:" + description + " Value:" + String(value) + " Date:" + date
+        return str + " year " + String(year) + " week :" + String(week) + " month " + String(month)
+        
     }
 }
 

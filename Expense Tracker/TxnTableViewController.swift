@@ -10,6 +10,7 @@ import UIKit
 
 class TransactionTableViewController: UITableViewController{
     @IBOutlet var transactionTable: UITableView!
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
     var transactionType:String = ""
     var dbHandler:DBHandler!
@@ -65,9 +66,21 @@ class TransactionTableViewController: UITableViewController{
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
+        
         let vc = segue.destination as? TransactionViewController
         vc?.transactionType = transactionType
-        vc?.operationType = "Add"
+        
+        if let barButton = sender as? UIBarButtonItem{
+            if (barButton == addButton){
+                vc?.operationType = "Add"
+            }
+        }
+        
+        else if let button = sender as? UIButton{
+            vc?.operationType = "Edit"
+            vc?.txnId = String(button.tag)
+        }
+
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -93,8 +106,7 @@ class TransactionTableViewController: UITableViewController{
     }
     
     @objc func editTapped(sender: UIButton) {
-
-        print("Tapped")
+        performSegue(withIdentifier: "txnView", sender: sender)
     }
 
     @objc func deleteTapped(sender: UIButton) {
@@ -106,7 +118,7 @@ class TransactionTableViewController: UITableViewController{
                title: "Confirmation", message: "Are you sure you want to remove the " + transactionType + "?", preferredStyle: .alert)
         
         alertController.addAction(UIAlertAction(title: "Remove", style: .cancel, handler: { (action: UIAlertAction!) in
-             
+            self.removeRow(id: Int(txnId))
         }))
         
         let defaultAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
@@ -114,6 +126,29 @@ class TransactionTableViewController: UITableViewController{
 
         present(alertController, animated: true, completion: nil)
     
+    }
+    
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+        
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+       if editingStyle == .delete{
+           self.removeRow(indexPath:indexPath)
+       }
+    }
+    
+    func removeRow(id:Int){
+        dbHandler.removeTxn(id:id)
+        populateData()
+    }
+    
+    func removeRow(indexPath:IndexPath){
+        tableView.beginUpdates()
+        dbHandler.removeTxn(id:transactions[indexPath.row].id)
+        transactions.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        tableView.endUpdates()
     }
 
     /*

@@ -29,7 +29,7 @@ class DBHandler {
     
     func createTable() -> Bool{
 
-        let createTaleQuerry = "CREATE TABLE IF NOT EXISTS Transactions ( id    INTEGER, type    TEXT, value    REAL, category    TEXT, description    TEXT, date    TEXT, PRIMARY KEY(id AUTOINCREMENT))"
+        let createTaleQuerry = "CREATE TABLE IF NOT EXISTS Transactions ( id    INTEGER, type    TEXT, value    REAL, category    TEXT, description    TEXT, date    TEXT, year INT, month INT, week INT, PRIMARY KEY(id AUTOINCREMENT))"
         
         if sqlite3_exec(connection, createTaleQuerry, nil, nil, nil) != SQLITE_OK{
             print("Error creating table")
@@ -118,6 +118,44 @@ class DBHandler {
         return transactions
     }
     
+    func getTxn(id:String)-> Transaction{
+        
+        print ("Get Transaction " + id)
+        
+        let transaction = Transaction()
+        
+        //let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
+     
+        let getTotalQuerry = "SELECT * from Transactions where id =?"
+        //let getTotalQuerry = "SELECT * from Transactions order by date desc"
+        
+        if sqlite3_prepare(connection, getTotalQuerry,-1,&statement, nil) != SQLITE_OK{
+            print("Error creating querry")
+            sqlite3_reset(statement)
+            return transaction
+        }
+        
+        if sqlite3_bind_int(statement, 1, Int32(id) ?? 0) != SQLITE_OK{
+            print("Error Binding " + id)
+            sqlite3_reset(statement)
+            return transaction
+        }
+     
+        if sqlite3_step(statement) == SQLITE_ROW {
+            transaction.id = Int(sqlite3_column_int(statement, 0))
+            transaction.type =  String(cString:sqlite3_column_text(statement, 1))
+            transaction.value = sqlite3_column_double(statement, 2)
+            transaction.catagory =  String(cString:sqlite3_column_text(statement, 3))
+            transaction.description =  String(cString:sqlite3_column_text(statement, 4))
+            transaction.date =  String(cString:sqlite3_column_text(statement, 5))
+            print("Retrieved " + transaction.toString())
+        }
+        
+        sqlite3_reset(statement)
+        return transaction
+    }
+    
+    
     func getLatest(type:String)->Double{
      
         let typeNs = type as NSString
@@ -145,12 +183,35 @@ class DBHandler {
         return 0.0
     }
     
+    func removeTxn(id:Int) -> Bool{
+        
+        print("Removing transaction " + String(id))
+        
+        
+        let removeQuerry = "DELETE from Transactions where id =?"
+        
+        if sqlite3_prepare(connection, removeQuerry,-1,&statement, nil) != SQLITE_OK{
+            print("Error creating querry")
+            sqlite3_reset(statement)
+            return false
+        }
+    
+        if sqlite3_bind_int(statement, 1, Int32(id)) != SQLITE_OK{
+            print("Error Binding " + String(id))
+            sqlite3_reset(statement)
+        }
+        sqlite3_step(statement)
+        sqlite3_reset(statement)
+        return true
+        
+    }
+    
     func insertTransaction(transaction:Transaction) -> Bool{
         
         print("Inserting " + transaction.toString())
         let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
         
-        let insertQuerry = "INSERT INTO Transactions (type, value, category, description, date) VALUES (?,?,?,?,?)"
+        let insertQuerry = "INSERT INTO Transactions (type, value, category, description, date, year, month, week) VALUES (?,?,?,?,?,?,?,?)"
         
         if sqlite3_prepare(connection, insertQuerry,-1,&statement, nil) != SQLITE_OK{
             print("Error creating querry")
@@ -188,6 +249,24 @@ class DBHandler {
             return false
         }
         
+        if sqlite3_bind_int(statement, 6, Int32(transaction.year)) != SQLITE_OK{
+            print("Error Binding " + String(transaction.year))
+            sqlite3_reset(statement)
+            return false
+        }
+        
+        if sqlite3_bind_int(statement, 7, Int32(transaction.month)) != SQLITE_OK{
+            print("Error Binding " + String(transaction.month))
+            sqlite3_reset(statement)
+            return false
+        }
+        
+        if sqlite3_bind_int(statement, 8, Int32(transaction.week)) != SQLITE_OK{
+            print("Error Binding " + String(transaction.week))
+            sqlite3_reset(statement)
+            return false
+        }
+        
         if sqlite3_step(statement) != SQLITE_DONE{
             print("Saving failed " + String(cString: sqlite3_errmsg(connection)))
             sqlite3_reset(statement)
@@ -196,6 +275,55 @@ class DBHandler {
         
         sqlite3_reset(statement)
         print("Saved succefully ")
+        return true
+    }
+    
+    func updateTransaction(transaction:Transaction) -> Bool{
+        
+        print("Inserting " + transaction.toString())
+        let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
+        
+        let updateQuerry = "Update Transactions set value = ?, category = ?, description = ? where id = ?"
+        
+        if sqlite3_prepare(connection, updateQuerry,-1,&statement, nil) != SQLITE_OK{
+            print("Error creating querry")
+            sqlite3_reset(statement)
+            return false
+        }
+        
+        if sqlite3_bind_double(statement, 1, transaction.value) != SQLITE_OK{
+            print("Error Binding " + String(transaction.value))
+            sqlite3_reset(statement)
+            return false
+        }
+     
+        
+        if sqlite3_bind_text(statement, 2, transaction.catagory ,-1, SQLITE_TRANSIENT) != SQLITE_OK{
+            print("Error Binding " + transaction.catagory)
+            sqlite3_reset(statement)
+            return false
+        }
+        
+        if sqlite3_bind_text(statement, 3, transaction.description ,-1, SQLITE_TRANSIENT) != SQLITE_OK{
+            print("Error Binding " + transaction.description)
+            sqlite3_reset(statement)
+            return false
+        }
+        
+        if sqlite3_bind_int(statement, 4, Int32(transaction.id)) != SQLITE_OK{
+            print("Error Binding " + String(transaction.id))
+            sqlite3_reset(statement)
+            return false
+        }
+        
+        if sqlite3_step(statement) != SQLITE_DONE{
+            print("Editing failed " + String(cString: sqlite3_errmsg(connection)))
+            sqlite3_reset(statement)
+            return false
+        }
+        
+        sqlite3_reset(statement)
+        print("Edited succefully ")
         return true
     }
 

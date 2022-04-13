@@ -17,6 +17,7 @@ class TransactionViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     var transactionType:String = ""
     var operationType:String = ""
+    var txnId:String = "nil"
     
     let expenses = ["Transport", "Grocery", "Utilities", "Entertainment" , "Cloths", "Other"]
     let incomes = ["Salary", "Savings", "Interest", "Benifits" , "Investments", "Other"]
@@ -38,6 +39,23 @@ class TransactionViewController: UIViewController, UIPickerViewDelegate, UIPicke
             dbHandler.createTable()
         }
         
+        if (operationType == "Edit"){
+            if (txnId != "nil"){
+                populateEditData(id:txnId)
+            }
+            else{
+                print("Invalid transaction")
+                performSegue(withIdentifier: "tableView", sender: self)
+            }
+        }
+        
+    }
+    
+    func populateEditData(id:String){
+        var transaction = dbHandler.getTxn(id:id)
+        transactionMenu.text = transaction.catagory
+        amount.text = String(transaction.value)
+        detail.text = transaction.description
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -74,12 +92,30 @@ class TransactionViewController: UIViewController, UIPickerViewDelegate, UIPicke
         newTransaction.catagory = transactionMenu.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "Other"
         newTransaction.value = Double(amount.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "0.0") ?? 0.0
         newTransaction.type = transactionType
-        newTransaction.description = transactionMenu.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NA"
+        newTransaction.description = detail.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "NA"
         let date = Date()
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MMM HH:mm"
         newTransaction.date = formatter.string(from: date)
-        dbHandler.insertTransaction(transaction: newTransaction)
+        
+        formatter.dateFormat = "yyyy"
+        newTransaction.year =  Int(formatter.string(from:date)) ?? 0
+        
+        formatter.dateFormat = "MM"
+        newTransaction.month =  Int(formatter.string(from:date)) ?? 0
+        
+        let calendar = Calendar.current
+        let weekOfYear = calendar.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0))
+        newTransaction.week =  weekOfYear
+        
+        if (operationType == "Add"){
+            dbHandler.insertTransaction(transaction: newTransaction)
+        }
+        else{
+            
+            newTransaction.id = Int(txnId) ?? -1
+            dbHandler.updateTransaction(transaction: newTransaction)
+        }
         
         print("User entered " + newTransaction.toString())
         performSegue(withIdentifier: "tableView", sender: self)
