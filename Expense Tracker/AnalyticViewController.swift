@@ -21,16 +21,16 @@ class AnalyticViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     let MONTHLY_INCOME = "Monthly Income"
     
     var reportTypes = [(String)]()
-    
-    let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
-    let unitsSold = [10.0, 4.0, 6.0, 3.0, 12.0, 16.0]
-    
-    let players = ["Ozil", "Ramsey", "Laca", "Auba", "Xhaka", "Torreira"]
-    let goals = [6, 8, 26, 30, 8, 10]
-
-    
+    var dbHandler:DBHandler!
+            
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dbHandler = DBHandler()
+        if (dbHandler.open()){
+            dbHandler.createTable()
+        }
+        
         reportTypes.append(WEEKLY_EXPEND)
         reportTypes.append(MONTHLY_EXPEND)
         reportTypes.append(WEEKLY_INCOME)
@@ -40,6 +40,7 @@ class AnalyticViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         reportType.inputView = pickerView
         // Do any additional setup after loading the view.
     }
+    
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         1
@@ -54,21 +55,64 @@ class AnalyticViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         return reportTypes[row]
     }
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        reportType.text = reportTypes[row]
-        setChart(dataPoints: months, values: unitsSold)
+    fileprivate func getDateFilter() -> DateFilter {
+        var dateFilter = DateFilter()
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        dateFilter.year =  Int(formatter.string(from:date)) ?? 0
+        
+        formatter.dateFormat = "MM"
+        dateFilter.month =  Int(formatter.string(from:date)) ?? 0
+        
+        let calendar = Calendar.current
+        dateFilter.week = calendar.component(.weekOfYear, from: Date.init(timeIntervalSinceNow: 0))
+        return dateFilter
     }
     
-    func setChart(dataPoints: [String], values: [Double]) {
+    func populateChart(_ report: Int) {
+        var chartData = ChartData()
+        var dateFilter = getDateFilter()
+        var typeTxn:String = "Expense"
+        var period = "Weekly"
+
+        if(reportTypes[report] == WEEKLY_INCOME || reportTypes[report] == MONTHLY_INCOME){
+            typeTxn = "Income"
+        }
+        
+        if(reportTypes[report] == MONTHLY_INCOME || reportTypes[report] == MONTHLY_EXPEND){
+            period = "Monthly"
+        }
+        
+        chartData = dbHandler.getChartData(type: typeTxn, dateFilter: dateFilter, period: period)
+        chartData.calcPrecentages()
+        setChart(dataSet:reportTypes[report], dataPoints: chartData.x, values: chartData.precentages)
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        reportType.text = reportTypes[row]
+        
+        populateChart(row)
+    
+    }
+    
+    func setChart(dataSet:String, dataPoints: [String], values: [Double]) {
+        
         var dataEntries: [ChartDataEntry] = []
         for i in 0..<dataPoints.count {
-          let dataEntry1 = ChartDataEntry(x: Double(i), y: values[i], data: dataPoints[i] as AnyObject)
+          let dataEntry1 = PieChartDataEntry(value: Double(values[i]), label: dataPoints[i])
           dataEntries.append(dataEntry1)
         }
-        print(dataEntries[0].data)
-        let pieChartDataSet = PieChartDataSet(entries: dataEntries, label: "Units Sold")
+        let pieChartDataSet = PieChartDataSet(entries: dataEntries, label: dataSet)
         let pieChartData = PieChartData(dataSet: pieChartDataSet)
         pieChartView.data = pieChartData
+        
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .percent
+        formatter.maximumFractionDigits = 1
+        formatter.multiplier = 1.0
+        pieChartData.setValueFormatter(DefaultValueFormatter(formatter:formatter))
+
         
         var colors: [UIColor] = []
         
@@ -83,9 +127,10 @@ class AnalyticViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         pieChartDataSet.colors = colors
       }
     
-    @IBAction func onSelectChart(_ sender: UITextField) {
+    @IBAction func onSelect(_ sender: UITextField) {
         pickerView.delegate?.pickerView?(pickerView, didSelectRow: 0, inComponent: 0)
     }
+
     
     
     /*

@@ -7,22 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EA724B01-DE25-465D-A38D-4A45D8065E49"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Expense Tracker/Database/DBHandler.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "getAllTransactions(type:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "3D426D9B-9567-422A-B75B-6D281AB040AE"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -46,9 +30,9 @@
             filePath = "Expense Tracker/Database/DBHandler.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
-            landmarkName = "getAllTransactions(type:)"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "getChartData(type:dateFilter:period:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -62,9 +46,9 @@
             filePath = "Expense Tracker/Database/DBHandler.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
-            landmarkName = "getAllTransactions(type:)"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "getChartData(type:dateFilter:period:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

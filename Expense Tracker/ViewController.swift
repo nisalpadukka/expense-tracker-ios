@@ -20,7 +20,6 @@ class ViewController: UIViewController, UITableViewDataSource {
         // Do any additional setup after loading the view.
         dbHandler = DBHandler()
         if (dbHandler.open()){
-            dbHandler.cleanTable()
             dbHandler.createTable()
         }
     
