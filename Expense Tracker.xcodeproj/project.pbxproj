@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		294B9786B48B75F0DC4F96C8 /* Pods_Expense_Tracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A723B151286BD16F43C70D /* Pods_Expense_Tracker.framework */; };
+		8F1DE502289E446B00C5D2B0 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1DE501289E446B00C5D2B0 /* GalleryViewController.swift */; };
+		8F1DE504289E450800C5D2B0 /* GalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1DE503289E450800C5D2B0 /* GalleryCollectionViewCell.swift */; };
+		8F1DE50B289ED9BC00C5D2B0 /* STARR.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F1DE50A289ED9BC00C5D2B0 /* STARR.png */; };
+		8F1DE50D289EE75800C5D2B0 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1DE50C289EE75800C5D2B0 /* CameraViewController.swift */; };
 		8F62EAB82802875400A5CF86 /* TxnViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F62EAB72802875400A5CF86 /* TxnViewController.swift */; };
 		8F62EABB280291AC00A5CF86 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F62EABA280291AC00A5CF86 /* Transaction.swift */; };
 		8F62EABF280292F900A5CF86 /* DBHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F62EABE280292F900A5CF86 /* DBHandler.swift */; };
@@ -29,6 +33,10 @@
 
 /* Begin PBXFileReference section */
 		8A38B547F590E3B7BCBCDB3C /* Pods-Expense Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Expense Tracker.release.xcconfig"; path = "Target Support Files/Pods-Expense Tracker/Pods-Expense Tracker.release.xcconfig"; sourceTree = "<group>"; };
+		8F1DE501289E446B00C5D2B0 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
+		8F1DE503289E450800C5D2B0 /* GalleryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCollectionViewCell.swift; sourceTree = "<group>"; };
+		8F1DE50A289ED9BC00C5D2B0 /* STARR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = STARR.png; sourceTree = "<group>"; };
+		8F1DE50C289EE75800C5D2B0 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		8F62EAB72802875400A5CF86 /* TxnViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxnViewController.swift; sourceTree = "<group>"; };
 		8F62EABA280291AC00A5CF86 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		8F62EABE280292F900A5CF86 /* DBHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBHandler.swift; sourceTree = "<group>"; };
@@ -81,6 +89,25 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8F1DE500289E442F00C5D2B0 /* Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				8F1DE505289E4DE000C5D2B0 /* Images */,
+				8F1DE501289E446B00C5D2B0 /* GalleryViewController.swift */,
+				8F1DE503289E450800C5D2B0 /* GalleryCollectionViewCell.swift */,
+				8F1DE50C289EE75800C5D2B0 /* CameraViewController.swift */,
+			);
+			path = Gallery;
+			sourceTree = "<group>";
+		};
+		8F1DE505289E4DE000C5D2B0 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				8F1DE50A289ED9BC00C5D2B0 /* STARR.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		8F62EAB92802919200A5CF86 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +147,7 @@
 		8F80316C27F0208F001F8934 /* Expense Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				8F1DE500289E442F00C5D2B0 /* Gallery */,
 				8F62EAB92802919200A5CF86 /* Model */,
 				8F62EABD280292DF00A5CF86 /* Database */,
 				8F8ABD1B280217F100131D59 /* TxnTableViewController.swift */,
@@ -200,6 +228,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F1DE50B289ED9BC00C5D2B0 /* STARR.png in Resources */,
 				8F80317A27F02090001F8934 /* LaunchScreen.storyboard in Resources */,
 				8F80317727F02090001F8934 /* Assets.xcassets in Resources */,
 				8F80317527F0208F001F8934 /* Main.storyboard in Resources */,
@@ -256,7 +285,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F62EABB280291AC00A5CF86 /* Transaction.swift in Sources */,
+				8F1DE504289E450800C5D2B0 /* GalleryCollectionViewCell.swift in Sources */,
 				8F80317227F0208F001F8934 /* ViewController.swift in Sources */,
+				8F1DE50D289EE75800C5D2B0 /* CameraViewController.swift in Sources */,
 				8F62EAB82802875400A5CF86 /* TxnViewController.swift in Sources */,
 				8FEB67112806B3EF0057739A /* ChartData.swift in Sources */,
 				8FEB67172806C59B0057739A /* ReportExpenseViewCell.swift in Sources */,
@@ -267,6 +298,7 @@
 				8F62EABF280292F900A5CF86 /* DBHandler.swift in Sources */,
 				8FEB6709280486580057739A /* TxnTableViewCell.swift in Sources */,
 				8FEB670F28051E120057739A /* AnalyticViewController.swift in Sources */,
+				8F1DE502289E446B00C5D2B0 /* GalleryViewController.swift in Sources */,
 				8FEB670D28051DDE0057739A /* ReportViewController.swift in Sources */,
 				8F8ABD1C280217F200131D59 /* TxnTableViewController.swift in Sources */,
 			);
