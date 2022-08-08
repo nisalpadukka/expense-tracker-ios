@@ -10,9 +10,11 @@ import UIKit
 class GalleryCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
+    var imageUrl:URL? = nil
     
-    public func configure(with image:UIImage){
+    public func configure(with image:UIImage, imagePath:URL){
         imageView.image = image
+        imageUrl = imagePath
     }
     
 }

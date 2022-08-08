@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		294B9786B48B75F0DC4F96C8 /* Pods_Expense_Tracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2A723B151286BD16F43C70D /* Pods_Expense_Tracker.framework */; };
+		8F159DC128A0AC3F0017899B /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F159DC028A0AC3F0017899B /* SingleImageViewController.swift */; };
 		8F1DE502289E446B00C5D2B0 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1DE501289E446B00C5D2B0 /* GalleryViewController.swift */; };
 		8F1DE504289E450800C5D2B0 /* GalleryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1DE503289E450800C5D2B0 /* GalleryCollectionViewCell.swift */; };
-		8F1DE50B289ED9BC00C5D2B0 /* STARR.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F1DE50A289ED9BC00C5D2B0 /* STARR.png */; };
 		8F1DE50D289EE75800C5D2B0 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1DE50C289EE75800C5D2B0 /* CameraViewController.swift */; };
 		8F62EAB82802875400A5CF86 /* TxnViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F62EAB72802875400A5CF86 /* TxnViewController.swift */; };
 		8F62EABB280291AC00A5CF86 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F62EABA280291AC00A5CF86 /* Transaction.swift */; };
@@ -33,9 +33,9 @@
 
 /* Begin PBXFileReference section */
 		8A38B547F590E3B7BCBCDB3C /* Pods-Expense Tracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Expense Tracker.release.xcconfig"; path = "Target Support Files/Pods-Expense Tracker/Pods-Expense Tracker.release.xcconfig"; sourceTree = "<group>"; };
+		8F159DC028A0AC3F0017899B /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		8F1DE501289E446B00C5D2B0 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		8F1DE503289E450800C5D2B0 /* GalleryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCollectionViewCell.swift; sourceTree = "<group>"; };
-		8F1DE50A289ED9BC00C5D2B0 /* STARR.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = STARR.png; sourceTree = "<group>"; };
 		8F1DE50C289EE75800C5D2B0 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		8F62EAB72802875400A5CF86 /* TxnViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxnViewController.swift; sourceTree = "<group>"; };
 		8F62EABA280291AC00A5CF86 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
@@ -92,20 +92,12 @@
 		8F1DE500289E442F00C5D2B0 /* Gallery */ = {
 			isa = PBXGroup;
 			children = (
-				8F1DE505289E4DE000C5D2B0 /* Images */,
 				8F1DE501289E446B00C5D2B0 /* GalleryViewController.swift */,
 				8F1DE503289E450800C5D2B0 /* GalleryCollectionViewCell.swift */,
 				8F1DE50C289EE75800C5D2B0 /* CameraViewController.swift */,
+				8F159DC028A0AC3F0017899B /* SingleImageViewController.swift */,
 			);
 			path = Gallery;
-			sourceTree = "<group>";
-		};
-		8F1DE505289E4DE000C5D2B0 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				8F1DE50A289ED9BC00C5D2B0 /* STARR.png */,
-			);
-			path = Images;
 			sourceTree = "<group>";
 		};
 		8F62EAB92802919200A5CF86 /* Model */ = {
@@ -228,7 +220,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F1DE50B289ED9BC00C5D2B0 /* STARR.png in Resources */,
 				8F80317A27F02090001F8934 /* LaunchScreen.storyboard in Resources */,
 				8F80317727F02090001F8934 /* Assets.xcassets in Resources */,
 				8F80317527F0208F001F8934 /* Main.storyboard in Resources */,
@@ -294,6 +285,7 @@
 				8F80316E27F0208F001F8934 /* AppDelegate.swift in Sources */,
 				8F8ABD1A28014E9400131D59 /* MainTableViewCell.swift in Sources */,
 				8FEB67132806BE610057739A /* DateFilter.swift in Sources */,
+				8F159DC128A0AC3F0017899B /* SingleImageViewController.swift in Sources */,
 				8F80317027F0208F001F8934 /* SceneDelegate.swift in Sources */,
 				8F62EABF280292F900A5CF86 /* DBHandler.swift in Sources */,
 				8FEB6709280486580057739A /* TxnTableViewCell.swift in Sources */,
@@ -458,6 +450,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -487,6 +480,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
