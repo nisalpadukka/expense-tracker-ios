@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WidgetKit
 
 class ViewController: UIViewController, UITableViewDataSource {
     
@@ -13,7 +14,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var mainTableView: UITableView!
     
     var dbHandler:DBHandler!
-
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
             mainTableView.reloadData()
+        dbHandler.refreshWidget()
     }
     
     //MARK:- Implementing tableview datasource methods

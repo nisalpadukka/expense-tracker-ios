@@ -7,6 +7,7 @@
 
 import Foundation
 import SQLite3
+import WidgetKit
 
 class DBHandler {
     
@@ -68,6 +69,7 @@ class DBHandler {
             return 0.0
         }
      
+        print(statement?.debugDescription)
         if sqlite3_step(statement) == SQLITE_ROW {
             let value = sqlite3_column_double(statement, 0)
             sqlite3_reset(statement)
@@ -406,6 +408,12 @@ class DBHandler {
         sqlite3_reset(statement)
         print("Saved succefully ")
         return true
+    }
+    
+    func refreshWidget(){
+        UserDefaults(suiteName:"group.ca.georgian.nisalpadukka.Expense-Tracker")?.set(String(getTotal(type: "Income")), forKey: "income")
+        UserDefaults(suiteName:"group.ca.georgian.nisalpadukka.Expense-Tracker")?.set(String(getTotal(type: "Expense")), forKey: "expense")
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func updateTransaction(transaction:Transaction) -> Bool{

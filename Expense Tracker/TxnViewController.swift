@@ -116,7 +116,7 @@ class TransactionViewController: UIViewController, UIPickerViewDelegate, UIPicke
             newTransaction.id = Int(txnId) ?? -1
             dbHandler.updateTransaction(transaction: newTransaction)
         }
-        
+        dbHandler.refreshWidget()
         print("User entered " + newTransaction.toString())
         performSegue(withIdentifier: "tableView", sender: self)
     }
