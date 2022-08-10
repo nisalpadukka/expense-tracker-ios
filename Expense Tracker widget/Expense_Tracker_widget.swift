@@ -17,11 +17,11 @@ struct Provider: IntentTimelineProvider {
     let defaults = UserDefaults.standard
 
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), text:"", configuration: ConfigurationIntent())
+        SimpleEntry(date: Date(), income:"",  expense:"", configuration: ConfigurationIntent())
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), text:"", configuration: configuration)
+        let entry = SimpleEntry(date: Date(), income:"", expense:"", configuration: configuration)
         var dbHandler = DBHandler()
         dbHandler.open()
         dbHandler.createTable()
@@ -39,10 +39,12 @@ struct Provider: IntentTimelineProvider {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
  
             var value1:String = ""
+            var value2:String = ""
             if let userDefaults = UserDefaults(suiteName: "group.ca.georgian.nisalpadukka.Expense-Tracker") {
                 value1 = userDefaults.string(forKey: "income") ?? "0.0"
+                value2 = userDefaults.string(forKey: "expense") ?? "0.0"
             }
-            let entry = SimpleEntry(date: entryDate, text:"$ " +  value1 , configuration: configuration)
+            let entry = SimpleEntry(date: entryDate, income:"$ " +  value1, expense:"$ " +  value2, configuration: configuration)
             entries.append(entry)
         }
 
@@ -53,7 +55,8 @@ struct Provider: IntentTimelineProvider {
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
-    let text: String
+    let income: String
+    let expense: String
     let configuration: ConfigurationIntent
 }
 
@@ -61,9 +64,15 @@ struct Expense_Tracker_widgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-        Text("Expense Tracker")
-        Text("Income : " + entry.text)
-        Text("Expense : " + entry.text)
+
+        VStack(alignment: .leading) {
+                VStack(spacing: 10) {
+                    Text("Expense Tracker").bold().font(.system(size: 20))
+                    
+                    Text("Income : " + entry.income)
+                    Text("Expense : " + entry.expense)
+                }
+            }
     }
 }
 
@@ -82,7 +91,7 @@ struct Expense_Tracker_widget: Widget {
 
 struct Expense_Tracker_widget_Previews: PreviewProvider {
     static var previews: some View {
-        Expense_Tracker_widgetEntryView(entry: SimpleEntry(date: Date(), text:"", configuration: ConfigurationIntent()))
+        Expense_Tracker_widgetEntryView(entry: SimpleEntry(date: Date(), income:"", expense:"", configuration: ConfigurationIntent()))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }

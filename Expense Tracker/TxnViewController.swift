@@ -119,6 +119,7 @@ class TransactionViewController: UIViewController, UIPickerViewDelegate, UIPicke
         dbHandler.refreshWidget()
         print("User entered " + newTransaction.toString())
         performSegue(withIdentifier: "tableView", sender: self)
+        checkLimits(income:dbHandler.getTotal(type: "Income"), expense:dbHandler.getTotal(type: "Expense"))
     }
     
     @IBAction func onSelect(_ sender: UITextField) {
@@ -133,6 +134,44 @@ class TransactionViewController: UIViewController, UIPickerViewDelegate, UIPicke
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
+    
+    func checkLimits(income:Double, expense:Double)
+    {
+        print ("check limits " + String(income) + " " + String(expense))
+        if (expense + 200 > income){
+            print("condition")
+            publishNotification(message:"Your expenses are more than your income")
+            return
+        }
+        
+        if (expense > income){
+            publishNotification(message:"Your expenses are close to your income")
+            return
+        }
+        
+        if (income > 5000 + expense){
+            publishNotification(message:"You have good amount of savings this week")
+            return
+        }
+    }
+    
+    func publishNotification(message:String){
+        print("adding notification")
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert,.sound])
+        {(granted, error)in}
+        let content = UNMutableNotificationContent()
+        content.title = "Expense Tracker"
+        content.subtitle = "Hey, There !"
+        content.body = message
+        content.sound = .default
+        let timeTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: timeTrigger)
+        center.add(request) { (error) in
+        }
+    }
+    
     
     /*
     // MARK: - Navigation

@@ -16,20 +16,45 @@ class ViewController: UIViewController, UITableViewDataSource {
     var dbHandler:DBHandler!
     let defaults = UserDefaults.standard
     
+    let imageView: UIImageView = {
+        let imageView = UIImageView(frame: CGRect(x:0, y:0, width:150, height:150))
+        imageView.image = UIImage(named : "ExpenseLogosblack2")
+        return imageView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(imageView)
+        
         // Do any additional setup after loading the view.
         dbHandler = DBHandler()
         if (dbHandler.open()){
             dbHandler.createTable()
         }
+    }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        imageView.center = view.center
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
+            self.animate()
+        })
+    }
+    
+    func animate(){
+        UIView.animate(withDuration: 1, animations: {
+            let size = self.view.frame.size.width * 2
+            let diffX = size - self.view.frame.size.width
+            let diffY = self.view.frame.size.height -  size
+            self.imageView.frame = CGRect(x:-diffX/2, y:diffY/2, width:size, height:size)
+            self.imageView.alpha = 0
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
             mainTableView.reloadData()
-        dbHandler.refreshWidget()
+            dbHandler.refreshWidget()
     }
     
     //MARK:- Implementing tableview datasource methods
