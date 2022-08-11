@@ -60,19 +60,19 @@ struct SimpleEntry: TimelineEntry {
     let configuration: ConfigurationIntent
 }
 
+
 struct Expense_Tracker_widgetEntryView : View {
     var entry: Provider.Entry
 
     var body: some View {
-
-        VStack(alignment: .leading) {
-                VStack(spacing: 10) {
-                    Text("Expense Tracker").bold().font(.system(size: 20))
-                    
-                    Text("Income : " + entry.income)
-                    Text("Expense : " + entry.expense)
-                }
-            }
+      ZStack {
+          Color("WidgetBackground")
+          VStack(spacing: 10) {
+              Text("Monthly Finances").bold().font(.system(size: 16)).foregroundColor(.white)
+              Text("Income : " + entry.income).font(.system(size: 15)).foregroundColor(.white)
+              Text("Expenses : " + entry.expense).font(.system(size: 15)).foregroundColor(.white)
+          }
+      }
     }
 }
 

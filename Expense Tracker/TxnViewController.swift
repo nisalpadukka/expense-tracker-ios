@@ -165,7 +165,7 @@ class TransactionViewController: UIViewController, UIPickerViewDelegate, UIPicke
         content.subtitle = "Hey, There !"
         content.body = message
         content.sound = .default
-        let timeTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        let timeTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 4, repeats: false)
         let uuidString = UUID().uuidString
         let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: timeTrigger)
         center.add(request) { (error) in
